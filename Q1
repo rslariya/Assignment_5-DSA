@@ -1,0 +1,183 @@
+#include <iostream>
+using namespace std;
+
+struct ListNode {
+    int info;
+    ListNode* link;
+};
+
+ListNode* start = NULL;
+
+void addAtStart(int val) {
+    ListNode* newItem = new ListNode();
+    newItem->info = val;
+    newItem->link = start;
+    start = newItem;
+}
+
+void addAtLast(int val) {
+    ListNode* newItem = new ListNode();
+    newItem->info = val;
+    newItem->link = NULL;
+    if (start == NULL) {
+        start = newItem;
+        return;
+    }
+    ListNode* current = start;
+    while (current->link != NULL) {
+        current = current->link;
+    }
+    current->link = newItem;
+}
+
+void insertAfterNode(int val, int targetVal) {
+    ListNode* current = start;
+    while (current != NULL && current->info != targetVal) {
+        current = current->link;
+    }
+    if (current == NULL) {
+        cout << "value " << targetVal << " not found!\n";
+        return;
+    }
+    ListNode* newItem = new ListNode();
+    newItem->info = val;
+    newItem->link = current->link;
+    current->link = newItem;
+}
+
+void removeFromStart() {
+    if (start == NULL) {
+        cout << "list is empty!\n";
+        return;
+    }
+    ListNode* temp = start;
+    start = start->link;
+    delete temp;
+}
+
+void removeFromLast() {
+    if (start == NULL) {
+        cout << "list is empty!\n";
+        return;
+    }
+    if (start->link == NULL) {
+        delete start;
+        start = NULL;
+        return;
+    }
+    ListNode* current = start;
+    while (current->link->link != NULL) {
+        current = current->link;
+    }
+    delete current->link;
+    current->link = NULL;
+}
+
+void removeValue(int val) {
+    if (start == NULL) {
+        cout << "list is empty!\n";
+        return;
+    }
+    if (start->info == val) {
+        ListNode* temp = start;
+        start = start->link;
+        delete temp;
+        return;
+    }
+    ListNode* current = start;
+    while (current->link != NULL && current->link->info != val) {
+        current = current->link;
+    }
+    if (current->link == NULL) {
+        cout << "value not found!\n";
+        return;
+    }
+    ListNode* nodeToRemove = current->link;
+    current->link = current->link->link;
+    delete nodeToRemove;
+}
+
+void findValue(int val) {
+    ListNode* current = start;
+    int pos = 1;
+    while (current != NULL) {
+        if (current->info == val) {
+            cout << "value " << val << " found at position " << pos << endl;
+            return;
+        }
+        current = current->link;
+        pos++;
+    }
+    cout << "value not found!\n";
+}
+
+void showList() {
+    if (start == NULL) {
+        cout << "list is empty!\n";
+        return;
+    }
+    ListNode* current = start;
+    while (current != NULL) {
+        cout << current->info << " -> ";
+        current = current->link;
+    }
+    cout << "NULL\n";
+}
+
+int main() {
+    int option, val, targetVal;
+    do {
+        cout << "\n--- options ---\n";
+        cout << "1. add at start\n2. add at last\n3. insert after value\n";
+        cout << "4. remove from start\n5. remove from last\n6. remove specific value\n";
+        cout << "7. find value\n8. show list\n9. exit\n";
+        cout << "enter your option: ";
+        cin >> option;
+
+        switch (option) {
+            case 1:
+                cout << "enter value: ";
+                cin >> val;
+                addAtStart(val);
+                break;
+            case 2:
+                cout << "enter value: ";
+                cin >> val;
+                addAtLast(val);
+                break;
+            case 3:
+                cout << "enter value to insert: ";
+                cin >> val;
+                cout << "insert after which value? ";
+                cin >> targetVal;
+                insertAfterNode(val, targetVal);
+                break;
+            case 4:
+                removeFromStart();
+                break;
+            case 5:
+                removeFromLast();
+                break;
+            case 6:
+                cout << "enter value to remove: ";
+                cin >> val;
+                removeValue(val);
+                break;
+            case 7:
+                cout << "enter value to find: ";
+                cin >> val;
+                findValue(val);
+                break;
+            case 8:
+                showList();
+                break;
+            case 9:
+                cout << "exiting...\n";
+                break;
+            default:
+                cout << "invalid option!\n";
+        }
+    } while (option != 9);
+
+    return 0;
+}
