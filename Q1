@@ -47,7 +47,7 @@ void insertAfterNode(int val, int targetVal) {
 
 void removeFromStart() {
     if (start == NULL) {
-        cout << "list is empty!\n";
+        cout << "list is empty\n";
         return;
     }
     ListNode* temp = start;
@@ -57,7 +57,7 @@ void removeFromStart() {
 
 void removeFromLast() {
     if (start == NULL) {
-        cout << "list is empty!\n";
+        cout << "list is empty\n";
         return;
     }
     if (start->link == NULL) {
@@ -75,7 +75,7 @@ void removeFromLast() {
 
 void removeValue(int val) {
     if (start == NULL) {
-        cout << "list is empty!\n";
+        cout << "list is empty\n";
         return;
     }
     if (start->info == val) {
@@ -89,7 +89,7 @@ void removeValue(int val) {
         current = current->link;
     }
     if (current->link == NULL) {
-        cout << "value not found!\n";
+        cout << "value not found\n";
         return;
     }
     ListNode* nodeToRemove = current->link;
@@ -108,12 +108,12 @@ void findValue(int val) {
         current = current->link;
         pos++;
     }
-    cout << "value not found!\n";
+    cout << "value not found\n";
 }
 
 void showList() {
     if (start == NULL) {
-        cout << "list is empty!\n";
+        cout << "list is empty\n";
         return;
     }
     ListNode* current = start;
