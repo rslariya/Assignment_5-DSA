@@ -1,0 +1,39 @@
+#include <iostream>
+using namespace std;
+
+struct ListNode {
+    int info;
+    ListNode* next;
+};
+
+ListNode* start = NULL;
+
+void addAtLast(int val) {
+    ListNode* newNode = new ListNode();
+    newNode->info = val;
+    newNode->next = NULL;
+    if (!start) { start = newNode; return; }
+    ListNode* current = start;
+    while (current->next) current = current->next;
+    current->next = newNode;
+}
+
+void getMiddle() {
+    if (!start) { cout << "list is empty\n"; return; }
+    ListNode* slow = start;
+    ListNode* fast = start;
+    while (fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    cout << "middle element: " << slow->info << endl;
+}
+
+int main() {
+    addAtLast(1);
+    addAtLast(2);
+    addAtLast(3);
+    addAtLast(4);
+    addAtLast(5);
+    getMiddle();
+}
