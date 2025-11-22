@@ -1,0 +1,69 @@
+#include <iostream>
+using namespace std;
+
+struct ListNode {
+    int value;
+    ListNode* next;
+};
+
+ListNode* first = NULL;
+
+void appendNode(int val) {
+    ListNode* newNode = new ListNode();
+    newNode->value = val;
+    newNode->next = NULL;
+    if (!first) { first = newNode; return; }
+    ListNode* current = first;
+    while (current->next) current = current->next;
+    current->next = newNode;
+}
+
+int removeAndCount(int target) {
+    int counter = 0;
+    while (first && first->value == target) {
+        ListNode* temp = first;
+        first = first->next;
+        delete temp;
+        counter++;
+    }
+    ListNode* current = first;
+    while (current && current->next) {
+        if (current->next->value == target) {
+            ListNode* temp = current->next;
+            current->next = current->next->next;
+            delete temp;
+            counter++;
+        } else {
+            current = current->next;
+        }
+    }
+    return counter;
+}
+
+void printList() {
+    ListNode* current = first;
+    while (current) {
+        cout << current->value << " -> ";
+        current = current->next;
+    }
+    cout << "NULL\n";
+}
+
+int main() {
+    appendNode(1);
+    appendNode(2);
+    appendNode(1);
+    appendNode(3);
+    appendNode(2);
+    appendNode(1);
+
+    cout << "initial list: ";
+    printList();
+
+    int target = 1;
+    int occurrences = removeAndCount(target);
+
+    cout << "occurrences of " << target << ": " << occurrences << endl;
+    cout << "modified list: ";
+    printList();
+}
