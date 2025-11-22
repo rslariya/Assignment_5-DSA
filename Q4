@@ -1,0 +1,56 @@
+#include <iostream>
+using namespace std;
+
+struct ListNode {
+    int value;
+    ListNode* next;
+};
+
+ListNode* first = NULL;
+
+void appendNode(int val) {
+    ListNode* newNode = new ListNode();
+    newNode->value = val;
+    newNode->next = NULL;
+    if (!first) { first = newNode; return; }
+    ListNode* current = first;
+    while (current->next) current = current->next;
+    current->next = newNode;
+}
+
+void reverse() {
+    ListNode* previous = NULL;
+    ListNode* current = first;
+    ListNode* following = NULL;
+    while (current) {
+        following = current->next;
+        current->next = previous;
+        previous = current;
+        current = following;
+    }
+    first = previous;
+}
+
+void printList() {
+    ListNode* current = first;
+    while (current) {
+        cout << current->value << " -> ";
+        current = current->next;
+    }
+    cout << "NULL\n";
+}
+
+int main() {
+    appendNode(1);
+    appendNode(2);
+    appendNode(3);
+    appendNode(4);
+
+    cout << "initial list: ";
+    printList();
+
+    reverse();
+
+    cout << "reversed list: ";
+    printList();
+}
